@@ -1,2 +1,16 @@
-<h1>StaticPages#home</h1>
-<p>Find me in app/views/static_pages/home.html.erb</p>
+<!--
+ERB
+・Rubyスクリプトの埋め込み動的ページ（controller定義の変数使用）を構築する
+・<% %>または<%= %>で囲む
+・provideメソッドとyieldメソッドはともに使用する
+- provideでハッシュとその具体的な値を定義する（:titleにHomeを格納）
+- yield(:title)でHomeと表示
+- 上記により同じ構造のページでyield(:title)が重複するため上の階層に引き出せる
+ -->
+<% provide(:title, "Home") %>
+<h1>Sample App</h1>
+<p>
+  This is the home page for the
+  <a href="https://railstutorial.jp/">Ruby on Rails Tutorial</a>
+  sample application.
+</p>

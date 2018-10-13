@@ -7,9 +7,20 @@ ERB
 - yield(:title)はシンボルを引数にValueを返す関数（ページ内でHomeを表示）
 - 上記により同じ構造のページでyield(:title)が重複するため上の階層に引き出せる
  -->
-<h1>Mystery</h1>
-<p>
-  This is the home page for the
-  <a href="https://railstutorial.jp/">Ruby on Rails Tutorial</a>
-  Mystery Application.
-</p>
+ <div class="center jumbotron">
+   <h1>Welcome to Mystery</h1>
+
+   <h2>
+     This is the Hacking LoveData App.&nbsp;Author Twitter is
+     <a href="https://twitter.com/donkonchi">Nchikun</a>.
+   </h2>
+
+   <%= link_to "Sign up now!", signup_path, class: "btn btn-lg btn-primary" %>
+ </div>
+
+ <!-- TODO ここにプロフィール情報登録と統計解析の説明欄をパーシャルで記載 -->
+ <div class="">
+ </div>
+
+ <%= link_to image_tag("rails.png", alt: "Rails logo"),
+             'http://rubyonrails.org/' %>

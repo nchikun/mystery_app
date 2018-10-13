@@ -1,3 +1,4 @@
+# 静的ページは基本的にメソッドの中身は書かない
 class StaticPagesController < ApplicationController
 
   # /static_pages/homeというGETリクエストに対して実行される
@@ -13,6 +14,9 @@ class StaticPagesController < ApplicationController
   end
 
   def about
+  end
+
+  def contact
   end
 
 end

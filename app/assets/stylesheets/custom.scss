@@ -1,0 +1,105 @@
+// ./app/stylesheetsに作成したCSSは全てのレイアウトに読み込まれる
+
+// @importでbootstrap,sprocketsの読み込み
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+// 変数定義
+$cute-pink: #ff99cc;
+
+// スタイル定義
+
+body {
+  // 要素の上部を60pxずらす
+  padding-top: 60px;
+}
+
+section {
+  // 内容が要素からはみ出した場合の処理（autoは自動）
+  overflow: auto;
+}
+
+textarea {
+  // 要素のサイズ変更をユーザが実施するか否か（verticalは高さのリサイズ提供）
+  resize: vertical;
+}
+
+.center {
+  // テキスト位置（centerは中央寄せ）
+  text-align: center;
+  h1 {
+    // テキストの下マージンを10px空ける
+    margin-bottom: 10px;
+  }
+}
+
+/* typography */
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1;
+}
+
+h1 {
+  font-size: 3em;
+  letter-spacing: -2px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+h2 {
+  font-size: 1.2em;
+  letter-spacing: -1px;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: normal;
+  color: #777;
+}
+
+p {
+  font-size: 1.1em;
+  line-height: 1.7em;
+}
+
+/* header */
+
+// id参照は#
+#logo {
+  float: left;
+  margin-right: 10px;
+  font-size: 1.7em;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  padding-top: 9px;
+  font-weight: bold;
+  &:hover {
+    color: #ff99cc;
+    text-decoration: none;
+  }
+}
+
+/* footer */
+
+footer {
+  margin-top: 45px;
+  padding-top: 5px;
+  border-top: 1px solid #eaeaea;
+  color: #777;
+  a {
+    color: #555;
+    &:hover {
+      color: $cute-pink;
+    }
+  }
+  small {
+    float: left;
+  }
+  ul {
+    float: right;
+    list-style: none;
+    li {
+      float: left;
+      margin-left: 15px;
+    }
+  }
+}

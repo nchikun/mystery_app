@@ -4,34 +4,23 @@
 ・最下層のbodyタグ内にあるyieldは各ページのレイアウトを挿入する箇所
 - home.html.erb,help.html.erb等
  -->
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= full_title(yield(:title)) %></title>
-    <%= csrf_meta_tags %>
+ <!DOCTYPE html>
+ <html>
+   <head>
+     <title><%= full_title(yield(:title)) %></title>
+     <%= csrf_meta_tags %>
+     <%= stylesheet_link_tag    'application', media: 'all',
+                                'data-turbolinks-track': 'reload' %>
+     <%= javascript_include_tag 'application',
+                                'data-turbolinks-track': 'reload' %>
 
-    <!--
-    レイアウト全体のCSSを定義
-    ・stylesheet_link_tagメソッド
-    - 第１引数:スタイルシートのパス
-    - 第２引数:ハッシュ（第１ハッシュはメディアタイプ,第２ハッシュはturbolink設定）
-    -->
-    <%=
-      stylesheet_link_tag(
-        'application',
-        {media: 'all','data-turbolinks-track': 'reload'})
-     %>
-
-    <!-- レイアウトのJavaScriptを定義 -->
-    <%=
-      javascript_include_tag(
-          'application',
-          {'data-turbolinks-track': 'reload'})
-     %>
-
-  </head>
-
-  <body>
-    <%= yield %>
-  </body>
-</html>
+     <%= render 'layouts/shim' %>
+   </head>
+   <%= render 'layouts/header' %>
+   <body>
+     <div class="container">
+       <%= yield %>
+       <%= render 'layouts/footer' %>
+     </div>
+   </body>
+ </html>

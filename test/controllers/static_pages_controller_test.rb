@@ -21,7 +21,7 @@ class StaticPagesControllerTest < ActionDispatch::IntegrationTest
     # 上記リクエストに対してステータスコードが200（成功）であることを確認
     assert_response :success
     # セレクタは指定ページにタグの存在と内容の一致を確認（titleタグとその中身）
-    assert_select "title", "Home | #{@base_title}"
+    assert_select "title", "#{@base_title}"
   end
 
   test "should get help" do

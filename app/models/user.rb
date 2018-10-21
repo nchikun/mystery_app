@@ -1,3 +1,5 @@
+# modelsにはDBの規則を書く
+
 class User < ApplicationRecord
 
   # emailのフォーマット正規表現

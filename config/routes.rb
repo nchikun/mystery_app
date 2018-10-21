@@ -14,5 +14,12 @@ Rails.application.routes.draw do
 
   # 動的ページ（controller名#アクション（メソッド）名）
   get  '/signup',  to: 'users#new' #signup_path
+  post '/signup',  to: 'users#create'
+
+=begin
+usersに対してRESTfulアクションを完備（/users/1等のページ）
+e.g. 特定ユーザ表示（/users/1等）はshowアクション（show.html.erb）
+=end
+  resources :users
 
 end

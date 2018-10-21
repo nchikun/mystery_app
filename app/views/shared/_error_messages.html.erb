@@ -1,0 +1,17 @@
+<!--
+・pluralize()は第1引数に数,第2引数に単位を入力 ⇒ 適切な複数形に変換
+・.errors.full_messagesはエラーメッセージのリストを持つ
+ -->
+
+<% if @user.errors.any? %>
+  <div id="error_explanation">
+    <div class="alert alert-danger">
+      The form contains <%= pluralize(@user.errors.count, "error") %>.
+    </div>
+    <ul>
+    <% @user.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>

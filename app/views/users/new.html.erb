@@ -3,6 +3,7 @@
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
+    <!-- form_for(~)で~のPOSTリクエストと暗黙に定義 -->
     <%= form_for(@user, url: signup_path) do |f| %>
       <%= render 'shared/error_messages' %>
 

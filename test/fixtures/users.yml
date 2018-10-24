@@ -1,3 +1,10 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-# usersテーブルに格納するサンプルデータを定義(ここにUserデータの打鍵)
+# ハッシュ値をサンプルで作ることは不可能なのでUser.digestメソッドを作成
+# ymlファイル内ではERBが使用可能,複数行コメントの書き方なし
+
+# 以下でusers(:michael)が使用可能となる
+michael:
+  name: Michael Example
+  email: michael@example.com
+  password_digest: <%= User.digest('password') %>

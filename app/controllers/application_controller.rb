@@ -1,8 +1,6 @@
+# 全コントローラクラスの親クラス
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-
-  def hello
-    render html: "hello, world!"
-  end
-
+  # SessionsHelperクラスの変数とメソッドは全コントローラで使用可能とする
+  include SessionsHelper
 end

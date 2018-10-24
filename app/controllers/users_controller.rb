@@ -24,6 +24,8 @@ newページでsubmitされた場合の挙動を定義
     # params[:user]でmodelのユーザ情報を記載
     @user = User.new(user_params)
     if @user.save
+      # ログインも同時に実施
+      log_in @user
       # flash変数は1度目しかされない表示を定義（:dangerハッシュも定義可能）
       flash[:success] = "Welcome to the Mystery!"
       redirect_to @user

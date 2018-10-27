@@ -50,10 +50,29 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     delete logout_path
     assert_not is_logged_in?
     assert_redirected_to root_url
+    # 2番目のウィンドウでログアウトをクリックするユーザをシミュレートする
+    delete logout_path
     follow_redirect!
     assert_select "a[href=?]", login_path
     assert_select "a[href=?]", logout_path,      count: 0
     assert_select "a[href=?]", user_path(@user), count: 0
+  end
+
+  # 永続化チェックボックスをオンにしたらcookieハッシュに値があることを確認
+  test "login with remembering" do
+    log_in_as(@user, remember_me: '1')
+    assert_not_empty cookies['remember_token']
+  end
+
+  # 永続化に関する操作のテスト
+  test "login without remembering" do
+    # 最初は永続化含めてログインする
+    log_in_as(@user, remember_me: '1')
+    delete logout_path
+    # 次は永続化しないでログインする
+    log_in_as(@user, remember_me: '0')
+    # 結果永続化（remember_token）がないことを確認
+    assert_empty cookies['remember_token']
   end
 
 end

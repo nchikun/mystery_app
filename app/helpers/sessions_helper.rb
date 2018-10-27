@@ -5,7 +5,7 @@
 
 module SessionsHelper
 
-  # ログイン状態か否か？
+  # ログイン状態か否か？（他にはどういう状態と解釈できるか？）
   def logged_in?
     # ログインの状態 = ユーザ情報がDBから取得できること
     !current_user.nil?
@@ -13,10 +13,17 @@ module SessionsHelper
 
   # ユーザ情報をDBから取得
   def current_user
-    # ユーザ情報がDBから取得できること = ログインが成功していること
-    if session[:user_id]
-      # インスタンス変数として何度もfind_byしない
-      @current_user ||= User.find_by(id: session[:user_id])
+    # sessionがuser_idを保持
+    if (user_id = session[:user_id])
+      # DBからの抽出処理を削減するためインスタンス変数で持つ
+      @current_user ||= User.find_by(id: user_id)
+    # cookiesはuser_idを保持
+    elsif (user_id = cookies.signed[:user_id])
+      user = User.find_by(id: user_id)
+      if user && user.authenticated?(cookies[:remember_token])
+        log_in user
+        @current_user = user
+      end
     end
   end
 
@@ -29,8 +36,24 @@ module SessionsHelper
   # ログアウト
   def log_out
     # ログアウト = sessionにもuserにも値が入っていない状態
+    forget(current_user)
     session.delete(:user_id)
     @current_user = nil
+  end
+
+  # セッションの永続化（cookiesへのuser_id保持）
+  def remember(user)
+    user.remember
+    # ブラウザを閉じたあとでもサーバ側で持つ情報（cookieを利用）
+    cookies.permanent.signed[:user_id] = user.id
+    cookies.permanent[:remember_token] = user.remember_token
+  end
+
+  # 永続的セッションを破壊する
+  def forget(user)
+    user.forget
+    cookies.delete(:user_id)
+    cookies.delete(:remember_token)
   end
 
 end

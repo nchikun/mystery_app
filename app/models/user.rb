@@ -18,11 +18,11 @@ class User < ApplicationRecord
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
 
-  # passwordハッシュ化
+  # passwordハッシュ化（create時のみ）
   has_secure_password
 
-  # passwordの文字長制限
-  validates :password, presence: true, length: { minimum: 6 }
+  # passwordに関して,入力があること,6文字以上の文字列であること,nilを許す（PATCH）
+  validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
 
   class << self
 

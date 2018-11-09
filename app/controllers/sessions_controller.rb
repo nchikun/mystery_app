@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
       # :remember_meはチェックボックスがオンの時に1,オフのときに0
       # digest生成で永続化するか否か
       params[:session][:remember_me] == '1' ? remember(user) : forget(user)
-      redirect_to user
+      redirect_back_or user
     else
       # フラッシュメッセージ（一度きりのメッセージ）
       # flash[]だとメッセージが残り続けるためflash.now[]を使用

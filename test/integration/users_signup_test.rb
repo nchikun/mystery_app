@@ -1,20 +1,16 @@
-# sign up時の使用感についてのテスト
-
 require 'test_helper'
 
 class UsersSignupTest < ActionDispatch::IntegrationTest
 
-  # POST無効テスト
+  def setup
+    ActionMailer::Base.deliveries.clear
+  end
+
   test "invalid signup information" do
     get signup_path
-
-    # 当コードブロック実行後にUser数が増えないことを確認
     assert_no_difference 'User.count' do
-      # usersのURLにparamsをPOST
       post users_path, params: {
-        # user情報は抽象的なparamsハッシュのvalueとして含まれる
         user: {
-          # さらにuserハッシュのvalueは以下の登録情報
           name: "",
           email: "user@invalid",
           password: "foo",
@@ -22,31 +18,34 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
         }
       }
     end
-
-    # 有効でないためnewページへ
     assert_template 'users/new'
   end
 
-  # POST有効テスト
-  test "valid signup information" do
+  test "valid signup information with account activation" do
     get signup_path
-
-    # 当コードブロック実行前後にUser.countの差分が1となることを確認
     assert_difference 'User.count', 1 do
-      post users_path, params: {
-        user: {
-          name: "Example User",
-          email: "user@example.com",
-          password: "password",
-          password_confirmation: "password"
-        }
-      }
+      post users_path, params: { user: { name:  "Example User",
+                                         email: "user@example.com",
+                                         password:              "password",
+                                         password_confirmation: "password" } }
     end
-
-    # 有効であるためshowページへ
+    assert_equal 1, ActionMailer::Base.deliveries.size
+    user = assigns(:user)
+    assert_not user.activated?
+    # 有効化していない状態でログインしてみる
+    log_in_as(user)
+    assert_not is_logged_in?
+    # 有効化トークンが不正な場合
+    get edit_account_activation_path("invalid token", email: user.email)
+    assert_not is_logged_in?
+    # トークンは正しいがメールアドレスが無効な場合
+    get edit_account_activation_path(user.activation_token, email: 'wrong')
+    assert_not is_logged_in?
+    # 有効化トークンが正しい場合
+    get edit_account_activation_path(user.activation_token, email: user.email)
+    assert user.reload.activated?
     follow_redirect!
     assert_template 'users/show'
-    # ログイン状態にもなっているか確認
     assert is_logged_in?
   end
 

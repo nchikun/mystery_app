@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class UsersControllerTest < ActionDispatch::IntegrationTest
+
   test "should get new" do
     get signup_path
     assert_response :success
@@ -15,8 +16,6 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     get users_path
     assert_redirected_to login_url
   end
-
-  # 単にログイン状態ならばedit,updateアクションが可能なことを確認
 
   test "should redirect edit when not logged in" do
     get edit_user_path(@user)
@@ -34,8 +33,6 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_not flash.empty?
     assert_redirected_to login_url
   end
-
-  # ログイン状態だけでなく本人であることもedit,updateのために必要
 
   test "should redirect edit when logged in as wrong user" do
     log_in_as(@other_user)

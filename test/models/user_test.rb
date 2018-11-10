@@ -1,9 +1,3 @@
-=begin
-Userは単にログインに必要な情報をまとめる。
-Profileでユーザのプロフィール情報をまとめる。
-⇒その際にどの項目が必須でどの項目が任意なのかどうか等をTDDする
-=end
-
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
@@ -16,8 +10,6 @@ class UserTest < ActiveSupport::TestCase
   test "should be valid" do
     assert @user.valid?
   end
-
-  # name,emailの空白,nil制限について
 
   test "name should be present" do
     @user.name = "  "
@@ -33,8 +25,6 @@ class UserTest < ActiveSupport::TestCase
     assert_not @user.valid?
   end
 
-  # name,emailの文字長について
-
   test "name should not be too long" do
     @user.name = "a" * 51
     assert_not @user.valid?
@@ -44,8 +34,6 @@ class UserTest < ActiveSupport::TestCase
     @user.email = "a" * 244 + "@example.com"
     assert_not @user.valid?
   end
-
-  # emailのフォーマットについて
 
   test "email validation should accept valid addresses" do
     valid_addresses = %w[user@example.com USER@foo.COM A_US-ER@foo.bar.org
@@ -65,17 +53,12 @@ class UserTest < ActiveSupport::TestCase
     end
   end
 
-  # emailの一意性について
-
   test "email addresses should be unique" do
     duplicate_user = @user.dup
-    # emailは大文字小文字区別しないため
     duplicate_user.email = @user.email.upcase
     @user.save
     assert_not duplicate_user.valid?
   end
-
-  # passwordの制限について
 
   test "password should be present (nonblank)" do
     @user.password = @user.password_confirmation = " " * 6
@@ -87,10 +70,8 @@ class UserTest < ActiveSupport::TestCase
     assert_not @user.valid?
   end
 
-  # その他
-
   test "authenticated? should return false for a user with nil digest" do
-    assert_not @user.authenticated?('')
+    assert_not @user.authenticated?(:remember, '')
   end
 
 end

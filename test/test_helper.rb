@@ -7,13 +7,10 @@ Minitest::Reporters.use!
 class ActiveSupport::TestCase
   fixtures :all
 
-  # ログインされた状態か否か
   def is_logged_in?
     !session[:user_id].nil?
   end
 
-  # テストユーザとしてログインする
-  # ログイン状態 = essionにuser_idが入っていること
   def log_in_as(user)
     session[:user_id] = user.id
   end
@@ -21,8 +18,6 @@ end
 
 class ActionDispatch::IntegrationTest
 
-  # テストユーザとしてログインする
-  # ログイン状態 = ログインページにPOSTリクエストを投げること
   def log_in_as(user, password: 'password', remember_me:'1')
     post login_path, params: {
       session: {

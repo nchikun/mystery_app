@@ -1,41 +1,30 @@
-// ./app/stylesheetsに作成したCSSは全てのレイアウトに読み込まれる
-
-// @importでbootstrap,sprocketsの読み込み
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
-// 変数定義
 $cute-pink: #ff99cc;
 
-// ミックスイン
 @mixin box_sizing {
   -moz-box-sizing:    border-box;
   -webkit-box-sizing: border-box;
   box-sizing:         border-box;
 }
 
-// スタイル定義
 
 body {
-  // 要素の上部を60pxずらす
   padding-top: 60px;
 }
 
 section {
-  // 内容が要素からはみ出した場合の処理（autoは自動）
   overflow: auto;
 }
 
 textarea {
-  // 要素のサイズ変更をユーザが実施するか否か（verticalは高さのリサイズ提供）
   resize: vertical;
 }
 
 .center {
-  // テキスト位置（centerは中央寄せ）
   text-align: center;
   h1 {
-    // テキストの下マージンを10px空ける
     margin-bottom: 10px;
   }
 }
@@ -69,7 +58,6 @@ p {
 
 /* header */
 
-// id参照は#
 #logo {
   float: left;
   margin-right: 10px;

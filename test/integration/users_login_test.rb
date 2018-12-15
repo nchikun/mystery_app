@@ -6,7 +6,6 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     @user = users(:michael)
   end
 
-  # ログインに関わる挙動の統合テスト（フラッシュメッセージのテストも加味）
   test "login with invalid information" do
     get login_path
     assert_template 'sessions/new'
@@ -19,7 +18,6 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     assert flash.empty?
   end
 
-  # 正常ログインのテスト
   test "login with valid information" do
     get login_path
     post login_path, params: { session: { email:    @user.email,
@@ -35,7 +33,6 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     assert_select "a[href=?]", user_path(@user)
   end
 
-  # ログアウトのテスト
   test "login with valid information followed by logout" do
     get login_path
     post login_path, params: { session: { email:    @user.email,
@@ -58,13 +55,11 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     assert_select "a[href=?]", user_path(@user), count: 0
   end
 
-  # 永続化チェックボックスをオンにしたらcookieハッシュに値があることを確認
   test "login with remembering" do
     log_in_as(@user, remember_me: '1')
     assert_not_empty cookies['remember_token']
   end
 
-  # 永続化に関する操作のテスト
   test "login without remembering" do
     # 最初は永続化含めてログインする
     log_in_as(@user, remember_me: '1')
